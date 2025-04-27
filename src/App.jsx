@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-} from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+
+import Home from './components/Home';
 import RecipeForm from './components/RecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetail from './components/RecipeDetail';
@@ -13,11 +10,12 @@ import './index.css';
 
 const API_URL = 'http://localhost:3001/recipes';
 
-const App = () => {
+const AppContent = () => {
   const [recipes, setRecipes] = useState([]);
-  const [showForm, setShowForm] = useState(true);
   const [editIndex, setEditIndex] = useState(null);
   const [viewIndex, setViewIndex] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(API_URL)
@@ -41,6 +39,7 @@ const App = () => {
           updated[editIndex] = data;
           setRecipes(updated);
           setEditIndex(null);
+          navigate('/list');
         });
     } else {
       fetch(API_URL, {
@@ -49,7 +48,10 @@ const App = () => {
         body: JSON.stringify(recipe),
       })
         .then((res) => res.json())
-        .then((newRecipe) => setRecipes([...recipes, newRecipe]));
+        .then((newRecipe) => {
+          setRecipes([...recipes, newRecipe]);
+          navigate('/list');
+        });
     }
   };
 
@@ -64,58 +66,75 @@ const App = () => {
 
   const handleEdit = (index) => {
     setEditIndex(index);
-    setShowForm(true);
-    setViewIndex(null);
+    navigate('/add');
   };
 
   const handleView = (index) => {
     setViewIndex(index);
+    navigate(`/detail/${index}`);
   };
 
   return (
     <>
-      <AppBar position="static" sx={{ m: 0, p: 0 }}>
+      <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
             Recipe Manager
           </Typography>
-          <Button color="inherit" onClick={() => {
-            setShowForm(true);
-            setViewIndex(null);
-            setEditIndex(null);
-          }}>
-            Add Recipe
-          </Button>
-          <Button color="inherit" onClick={() => {
-            setShowForm(false);
-            setViewIndex(null);
-            setEditIndex(null);
-          }}>
-            View Recipes
-          </Button>
+          <Button color="inherit" onClick={() => navigate('/')}>Home</Button>
+          <Button color="inherit" onClick={() => navigate('/add')}>Add Recipe</Button>
+          <Button color="inherit" onClick={() => navigate('/list')}>View Recipes</Button>
         </Toolbar>
       </AppBar>
 
       <Box sx={{ p: 2 }}>
-        {viewIndex !== null ? (
-          <RecipeDetail recipe={recipes[viewIndex]} onBack={() => setViewIndex(null)} />
-        ) : showForm ? (
-          <RecipeForm
-            onAdd={handleAdd}
-            initialData={editIndex !== null ? recipes[editIndex] : null}
-            onBackToList={() => setShowForm(false)}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/add"
+            element={
+              <RecipeForm
+                onAdd={handleAdd}
+                initialData={editIndex !== null ? recipes[editIndex] : null}
+                onBackToList={() => navigate('/list')}
+              />
+            }
           />
-        ) : (
-          <RecipeList
-            recipes={recipes}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            onView={handleView}
+          <Route
+            path="/list"
+            element={
+              <RecipeList
+                recipes={recipes}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                onView={handleView}
+              />
+            }
           />
-        )}
+          <Route
+            path="/detail/:id"
+            element={
+              viewIndex !== null && (
+                <RecipeDetail
+                  recipe={recipes[viewIndex]}
+                  onBack={() => {
+                    setViewIndex(null);
+                    navigate('/list');
+                  }}
+                />
+              )
+            }
+          />
+        </Routes>
       </Box>
     </>
   );
 };
+
+const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;
