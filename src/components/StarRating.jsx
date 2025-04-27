@@ -21,6 +21,7 @@ const StarRating = ({ value, onChange, readOnly = false, size = 'medium' }) => {
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Rating
         name="recipe-rating"
+        data-cy="recipe-rating-stars"
         value={value}
         precision={0.5}
         onChange={(_, newValue) => !readOnly && onChange?.(newValue)}
