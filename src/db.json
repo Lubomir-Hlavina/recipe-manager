@@ -1,40 +1,116 @@
 {
-    "recipes": [{
-            "id": 1,
-            "title": "Spaghetti Bolognese",
-            "category": "Main Course",
-            "ingredients": "Spaghetti, ground beef, tomato sauce, onion, garlic",
-            "vegetarian": false,
-            "difficulty": 3,
-            "rating": 3
-
-        },
-        {
-            "id": 2,
-            "title": "Vegetable Stir Fry",
-            "category": "Main Course",
-            "ingredients": "Broccoli, carrots, bell pepper, soy sauce",
-            "vegetarian": true,
-            "difficulty": 2,
-            "rating": 2
-        },
-        {
-            "id": 3,
-            "title": "Chocolate Cake",
-            "category": "Dessert",
-            "ingredients": "Flour, cocoa powder, sugar, eggs, butter",
-            "vegetarian": true,
-            "difficulty": 4,
-            "rating": 4
-        },
-        {
-            "id": 4,
-            "title": "Caesar Salad",
-            "category": "Appetizer",
-            "ingredients": "Lettuce, croutons, parmesan, caesar dressing",
-            "vegetarian": false,
-            "difficulty": 1,
-            "rating": 5
-        }
-    ]
+  "recipes": [
+    {
+      "id": "2",
+      "title": "Vegetable Stir Fry",
+      "category": "Main Course",
+      "ingredients": "Broccoli, carrots, bell pepper, soy sauce",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 2
+    },
+    {
+      "id": "3",
+      "title": "Chocolate Cake",
+      "category": "Dessert",
+      "ingredients": "Flour, cocoa powder, sugar, eggs, butter",
+      "vegetarian": true,
+      "difficulty": 4,
+      "rating": 4
+    },
+    {
+      "id": "4",
+      "title": "Caesar Salad",
+      "category": "Appetizer",
+      "ingredients": "Lettuce, croutons, parmesan, caesar dressing",
+      "vegetarian": false,
+      "difficulty": 1,
+      "rating": 5
+    },
+    {
+      "id": "4ea4",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "4b52",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "b3c4",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "b88a",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "78e0",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "2da7",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "e7b1",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "c703",
+      "title": "New Recipe",
+      "category": "Dessert",
+      "ingredients": "Sugar, flour, eggs",
+      "vegetarian": true,
+      "difficulty": 2,
+      "rating": 4
+    },
+    {
+      "id": "ec20",
+      "title": "Spaghetti Bolognese",
+      "category": "Main Course",
+      "ingredients": "spaghetti, beef, tomato sauce",
+      "vegetarian": true,
+      "difficulty": 5,
+      "rating": 2
+    },
+    {
+      "id": "bd3c",
+      "category": "Dessert"
+    }
+  ]
 }
