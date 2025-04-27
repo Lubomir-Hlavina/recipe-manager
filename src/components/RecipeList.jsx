@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { difficultyLabels } from '../constants';
 
 const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
   const [search, setSearch] = useState('');
@@ -57,14 +58,15 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
     });
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }} data-cy="recipe-list">
       <Stack direction="row" spacing={2} sx={{ mb: 3 }} flexWrap="wrap">
         <TextField
           label="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          data-cy="search-input"
         />
-        <FormControl sx={{ minWidth: 120 }}>
+        <FormControl sx={{ minWidth: 120 }} data-cy="filter-category">
           <InputLabel>Category</InputLabel>
           <Select
             value={categoryFilter}
@@ -78,7 +80,7 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
             <MenuItem value="Beverage">Beverage</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ minWidth: 140 }}>
+        <FormControl sx={{ minWidth: 140 }} data-cy="filter-vegetarian">
           <InputLabel>Vegetarian</InputLabel>
           <Select
             value={vegetarianFilter}
@@ -90,7 +92,7 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
             <MenuItem value="no">No</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ minWidth: 160 }}>
+        <FormControl sx={{ minWidth: 160 }} data-cy="sort-select">
           <InputLabel>Sort</InputLabel>
           <Select
             value={sort}
@@ -104,7 +106,7 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
             <MenuItem value="ratingDesc">Rating: High to Low</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ minWidth: 160 }}>
+        <FormControl sx={{ minWidth: 160 }} data-cy="filter-rating">
           <InputLabel>Min Rating</InputLabel>
           <Select
             value={minRatingFilter}
@@ -122,26 +124,30 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
       </Stack>
 
       {filteredRecipes.length === 0 ? (
-        <Typography variant="h6" align="center">
+        <Typography variant="h6" align="center" data-cy="no-recipes-found">
           No matching recipes found.
         </Typography>
       ) : (
-        <Stack spacing={2}>
+        <Stack spacing={2} data-cy="recipes-list">
           {filteredRecipes.map((recipe, index) => (
             <Card
               key={index}
               sx={{ position: 'relative', cursor: 'pointer' }}
               onClick={() => onView(index)}
+              data-cy={`recipe-card-${index}`}
             >
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant="h6">{recipe.title}</Typography>
+                  <Typography variant="h6" data-cy={`recipe-title-${index}`}>
+                    {recipe.title}
+                  </Typography>
                   <Stack direction="row" spacing={1}>
                     <IconButton
                       onClick={(e) => {
                         e.stopPropagation();
                         onEdit(index);
                       }}
+                      data-cy={`edit-recipe-${index}`}
                     >
                       <EditIcon />
                     </IconButton>
@@ -150,6 +156,7 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
                         e.stopPropagation();
                         onDelete(index);
                       }}
+                      data-cy={`delete-recipe-${index}`}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -161,11 +168,21 @@ const RecipeList = ({ recipes, onDelete, onEdit, onView }) => {
                   readOnly
                   size="small"
                   sx={{ mt: 0.5 }}
+                  data-cy={`recipe-rating-${index}`}
                 />
 
-                <Chip label={recipe.category} size="small" sx={{ mt: 1, mb: 1 }} />
+                <Chip
+                  label={recipe.category}
+                  size="small"
+                  sx={{ mt: 1, mb: 1 }}
+                  data-cy={`recipe-category-${index}`}
+                />
 
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                  <strong>Difficulty:</strong> {difficultyLabels[recipe.difficulty]}
+                </Typography>
+
+                <Typography variant="body2" color="text.secondary" data-cy={`recipe-ingredients-${index}`}>
                   {recipe.ingredients.length > 60
                     ? recipe.ingredients.substring(0, 60) + '...'
                     : recipe.ingredients}
