@@ -8,6 +8,7 @@ import {
   Button,
 } from '@mui/material';
 import StarRating from './StarRating';
+import { difficultyLabels } from '../constants';
 
 const RecipeDetail = ({ recipe, onBack }) => {
   if (!recipe) return null;
@@ -26,9 +27,9 @@ const RecipeDetail = ({ recipe, onBack }) => {
           <strong>Vegetarian:</strong> {recipe.vegetarian ? 'Yes' : 'No'}
         </Typography>
         <Typography variant="body1" sx={{ mt: 1 }}>
-          <strong>Difficulty:</strong> {recipe.difficulty}
+         <strong>Difficulty:</strong> {difficultyLabels[recipe.difficulty]}
         </Typography>
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2 }} data-cy="recipe-detail-rating">
           <Typography variant="body1">
             <strong>Rating:</strong>
           </Typography>
