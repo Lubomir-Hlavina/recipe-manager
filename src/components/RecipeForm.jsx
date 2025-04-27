@@ -16,6 +16,7 @@ import {
   Stack,
 } from '@mui/material';
 import StarRating from './StarRating';
+import { difficultyLabels } from '../constants';
 
 const categories = ['Appetizer', 'Main Course', 'Dessert', 'Beverage'];
 
@@ -54,15 +55,17 @@ const RecipeForm = ({ onAdd, initialData, onBackToList }) => {
       component="form"
       onSubmit={handleSubmit}
       sx={{ display: 'grid', gap: 2, width: '100%', maxWidth: '900px', mx: 'auto' }}
+      data-cy="recipe-form"
     >
       <TextField
         label="Recipe Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
+        data-cy="recipe-form-title"
       />
 
-      <FormControl>
+      <FormControl data-cy="recipe-form-category">
         <InputLabel>Category</InputLabel>
         <Select
           value={category}
@@ -82,6 +85,7 @@ const RecipeForm = ({ onAdd, initialData, onBackToList }) => {
         value={ingredients}
         onChange={(e) => setIngredients(e.target.value)}
         required
+        data-cy="recipe-form-ingredients"
       />
 
       <FormControlLabel
@@ -89,39 +93,51 @@ const RecipeForm = ({ onAdd, initialData, onBackToList }) => {
           <Checkbox
             checked={vegetarian}
             onChange={(e) => setVegetarian(e.target.checked)}
+            data-cy="recipe-form-vegetarian"
           />
         }
         label="Vegetarian"
       />
 
-      <Box>
-        <Typography gutterBottom>Difficulty</Typography>
-        <Slider
-          value={difficulty}
-          onChange={(e, v) => setDifficulty(v)}
-          min={1}
-          max={5}
-          step={1}
-          marks
-          valueLabelDisplay="auto"
-        />
-      </Box>
+    <Box data-cy="recipe-form-difficulty">
+      <Typography gutterBottom>Difficulty</Typography>
+      <Typography data-cy="difficulty-label" variant="subtitle1">
+        {difficultyLabels[difficulty]}
+      </Typography>
+      <Slider
+        value={difficulty}
+        onChange={(e, v) => setDifficulty(v)}
+        min={1}
+        max={5}
+        step={1}
+        marks
+        valueLabelDisplay="auto"
+      />
+    </Box>
 
-      <Box>
+      <Box data-cy="recipe-form-rating">
         <Typography gutterBottom>Rating (required)</Typography>
         <StarRating value={rating} onChange={setRating} />
         {rating === 0 && (
-          <Typography color="error" variant="caption">
+          <Typography color="error" variant="caption" data-cy="rating-error">
             Please select a rating
           </Typography>
         )}
       </Box>
 
       <Stack direction="row" spacing={2}>
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          data-cy="recipe-form-submit"
+        >
           {initialData ? 'Update Recipe' : 'Add Recipe'}
         </Button>
-        <Button variant="outlined" onClick={onBackToList}>
+        <Button
+          variant="outlined"
+          onClick={onBackToList}
+          data-cy="recipe-form-back"
+        >
           Back to List
         </Button>
       </Stack>
@@ -133,14 +149,14 @@ const RecipeForm = ({ onAdd, initialData, onBackToList }) => {
         onClose={() => setShowSuccess(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="success" onClose={() => setShowSuccess(false)}>
+        <Alert severity="success" onClose={() => setShowSuccess(false)} data-cy="recipe-form-success">
           {initialData ? 'Recipe updated!' : 'Recipe successfully added!'}
         </Alert>
       </Snackbar>
 
       {/* Error */}
       {error && (
-        <Alert severity="error" onClose={() => setError('')}>
+        <Alert severity="error" onClose={() => setError('')} data-cy="recipe-form-error">
           {error}
         </Alert>
       )}
